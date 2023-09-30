@@ -6,6 +6,7 @@ import 'package:petshop_assist/models/customer_info.dart';
 import 'package:petshop_assist/models/datetime_converter.dart';
 import 'package:petshop_assist/models/driving_history.dart';
 import 'package:petshop_assist/services/driving_history_service.dart';
+import 'package:petshop_assist/services/grooming_type_service.dart';
 
 class CustomerListIndex extends StatefulWidget {
   const CustomerListIndex({

@@ -8,8 +8,8 @@ class DatabaseService {
 
   static const String customerInfoTable = "customers";
   static const String drivingHistoryTable = "driving_history";
-  static const String grommingTypeTable = "gromming_type";
-  static const String grommingPriceTable = "gromming_price";
+  static const String groomingTypeTable = "grooming_type";
+  static const String groomingPriceTable = "grooming_price";
 
   static Future<Database> get database async {
     if (_database != null) return _database;
@@ -47,6 +47,25 @@ class DatabaseService {
         "create_date TEXT,"
         "customer_id INTEGER,"
         "CONSTRAINT driving_history_FK FOREIGN KEY (customer_id) REFERENCES $customerInfoTable(id));");
+
+    // create grooming type table
+    await createTable(
+        groomingTypeTable,
+        "CREATE TABLE $groomingTypeTable ("
+        "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+        "name TEXT,"
+        "is_option INTEGER);");
+
+    // create grooming price table
+    await createTable(
+        groomingPriceTable,
+        "CREATE TABLE $groomingPriceTable ("
+        "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+        "grooming_type INTEGER,"
+        "pet_type INTEGER,"
+        "weight_limit INTEGER,"
+        "price INTEGER,"
+        "CONSTRAINT NewTable_FK FOREIGN KEY (grooming_type) REFERENCES $groomingTypeTable(id));");
   }
 
   static Future<bool> tableExist(String tableName) async {
