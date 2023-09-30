@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:petshop_assist/components/app_drawer.dart';
 import 'package:petshop_assist/components/bottom_navigation_bar.dart';
+import 'package:petshop_assist/components/divider.dart';
+import 'package:petshop_assist/pages/settings/grooming_setting.dart';
 import 'package:petshop_assist/theme/WaveDecoratedFloatingActionButton.dart';
 
 class SettingPage extends StatefulWidget {
@@ -73,16 +75,12 @@ class _SettingIndexState extends State<_SettingIndex> {
                     Material(
                       color: Colors.transparent,
                       child: ListTile(
-                        onTap: () {},
-                        title: const Text("미용 가격 설정"),
+                        onTap: () =>
+                            Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GroomingSettingPage())),
+                        title: Text(Intl.message("groomingSettingPageTitle")),
                       ),
                     ),
-                    const Divider(
-                      color: Colors.black87,
-                      height: 2,
-                      indent: 15,
-                      endIndent: 15,
-                    ),
+                    const ListDivider(),
                     Material(
                       color: Colors.transparent,
                       child: ListTile(

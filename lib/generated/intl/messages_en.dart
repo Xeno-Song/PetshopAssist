@@ -22,7 +22,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addGroomingMenu":
+            MessageLookupByLibrary.simpleMessage("Add grooming type"),
+        "addGroomingOption":
+            MessageLookupByLibrary.simpleMessage("Add grooming option"),
         "customerManagement": MessageLookupByLibrary.simpleMessage("Customers"),
+        "groomingMenu": MessageLookupByLibrary.simpleMessage("Grooming Type"),
+        "groomingOption":
+            MessageLookupByLibrary.simpleMessage("Grooming Options"),
+        "groomingSettingPageTitle":
+            MessageLookupByLibrary.simpleMessage("Grooming Settings"),
         "helloWorld": MessageLookupByLibrary.simpleMessage("Hello World!"),
         "noHistoryData":
             MessageLookupByLibrary.simpleMessage("No driven history"),

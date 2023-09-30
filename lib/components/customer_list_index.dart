@@ -65,9 +65,9 @@ class _CustomerListIndexState extends State<CustomerListIndex> {
       alignment: Alignment.centerLeft,
       child: Column(
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () => onCardTap(),
-            child: Container(
+            child: Ink(
               padding: const EdgeInsets.only(
                 top: 8,
                 right: 16,

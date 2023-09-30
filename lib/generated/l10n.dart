@@ -89,6 +89,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Grooming Settings`
+  String get groomingSettingPageTitle {
+    return Intl.message(
+      'Grooming Settings',
+      name: 'groomingSettingPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Grooming Type`
+  String get groomingMenu {
+    return Intl.message(
+      'Grooming Type',
+      name: 'groomingMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Grooming Options`
+  String get groomingOption {
+    return Intl.message(
+      'Grooming Options',
+      name: 'groomingOption',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add grooming type`
+  String get addGroomingMenu {
+    return Intl.message(
+      'Add grooming type',
+      name: 'addGroomingMenu',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add grooming option`
+  String get addGroomingOption {
+    return Intl.message(
+      'Add grooming option',
+      name: 'addGroomingOption',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

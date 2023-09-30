@@ -5,5 +5,10 @@
   },
   "customerManagement": "Customers",
   "noHistoryData": "No driven history",
-  "settingPageTitle": "Settings"
+  "settingPageTitle": "Settings",
+  "groomingSettingPageTitle": "Grooming Settings",
+  "groomingMenu": "Grooming Type",
+  "groomingOption": "Grooming Options",
+  "addGroomingMenu": "Add grooming type",
+  "addGroomingOption": "Add grooming option"
 }

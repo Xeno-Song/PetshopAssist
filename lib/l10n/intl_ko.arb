@@ -2,5 +2,10 @@
   "helloWorld": "반가워요!",
   "customerManagement": "고객 목록",
   "noHistoryData": "운행 이력 없음",
-  "settingPageTitle": "설정"
+  "settingPageTitle": "설정",
+  "groomingSettingPageTitle": "미용 금액 설정",
+  "groomingMenu": "미용 유형",
+  "groomingOption": "미용 추가 옵션",
+  "addGroomingMenu": "미용 유형 추가",
+  "addGroomingOption": "미용 추가 옵션 추가"
 }
