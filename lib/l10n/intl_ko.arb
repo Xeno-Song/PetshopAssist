@@ -1,5 +1,6 @@
 {
   "helloWorld": "반가워요!",
   "customerManagement": "고객 목록",
-  "noHistoryData": "운행 이력 없음"
+  "noHistoryData": "운행 이력 없음",
+  "settingPageTitle": "설정"
 }

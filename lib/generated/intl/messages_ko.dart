@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "customerManagement": MessageLookupByLibrary.simpleMessage("고객 목록"),
         "helloWorld": MessageLookupByLibrary.simpleMessage("반가워요!"),
-        "noHistoryData": MessageLookupByLibrary.simpleMessage("운행 이력 없음")
+        "noHistoryData": MessageLookupByLibrary.simpleMessage("운행 이력 없음"),
+        "settingPageTitle": MessageLookupByLibrary.simpleMessage("설정")
       };
 }

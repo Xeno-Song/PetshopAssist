@@ -79,6 +79,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Settings`
+  String get settingPageTitle {
+    return Intl.message(
+      'Settings',
+      name: 'settingPageTitle',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

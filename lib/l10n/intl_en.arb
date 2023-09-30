@@ -4,5 +4,6 @@
     "description": "The conventional newborn programmer greeting"
   },
   "customerManagement": "Customers",
-  "noHistoryData": "No driven history"
+  "noHistoryData": "No driven history",
+  "settingPageTitle": "Settings"
 }

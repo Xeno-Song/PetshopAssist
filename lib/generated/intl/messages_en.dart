@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerManagement": MessageLookupByLibrary.simpleMessage("Customers"),
         "helloWorld": MessageLookupByLibrary.simpleMessage("Hello World!"),
         "noHistoryData":
-            MessageLookupByLibrary.simpleMessage("No driven history")
+            MessageLookupByLibrary.simpleMessage("No driven history"),
+        "settingPageTitle": MessageLookupByLibrary.simpleMessage("Settings")
       };
 }
