@@ -7,6 +7,7 @@ class DatabaseService {
   static var _database;
 
   static const String customerInfoTable = "customers";
+  static const String petInfoTable = "pet_info";
   static const String drivingHistoryTable = "driving_history";
   static const String groomingTypeTable = "grooming_type";
   static const String groomingPriceTable = "grooming_price";
@@ -35,6 +36,22 @@ class DatabaseService {
         "name TEXT,"
         "call_number TEXT,"
         "memo TEXT);");
+
+    // create pet info table
+    await createTable(
+        petInfoTable,
+        'CREATE TABLE $petInfoTable ('
+        'id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,'
+        'name TEXT,'
+        '"type" INTEGER,'
+        'detail_type TEXT,'
+        'age INTEGER,'
+        'weight INTEGER,'
+        'neutering INTEGER,'
+        'memo TEXT,'
+        'customer_id INTEGER,'
+        'create_date TEXT,'
+        'CONSTRAINT pet_info_FK FOREIGN KEY (customer_id) REFERENCES $customerInfoTable(id));');
 
     // create driving history saving table
     await createTable(
