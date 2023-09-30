@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:petshop_assist/models/customer_info.dart';
 import 'package:petshop_assist/models/datetime_converter.dart';
 import 'package:petshop_assist/models/driving_history.dart';
+import 'package:petshop_assist/pages/customer/customer_detail.dart';
 import 'package:petshop_assist/services/driving_history_service.dart';
 import 'package:petshop_assist/services/grooming_type_service.dart';
 
@@ -150,7 +151,15 @@ class _CustomerListIndexState extends State<CustomerListIndex> {
                         splashRadius: 18,
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => CustomerDetailPage(
+                                customer: widget.customerInfo,
+                              ),
+                            ),
+                          );
+                        },
                         icon: const Icon(Icons.info),
                         splashRadius: 18,
                       ),
