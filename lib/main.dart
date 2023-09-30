@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Taxi Logger',
       theme: Themes.lightTheme,
-      home: const SettingPage(),
+      home: const CustomerManagementPage(),
       locale: const Locale.fromSubtags(languageCode: 'ko'), // set local language
       // Localization options
       // https://docs.flutter.dev/ui/accessibility-and-localization/internationalization
