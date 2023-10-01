@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
-import 'package:petshop_assist/components/app_drawer.dart';
-import 'package:petshop_assist/components/bottom_navigation_bar.dart';
+import 'package:petshop_assist/components/divider.dart';
 import 'package:petshop_assist/models/customer_info.dart';
+import 'package:petshop_assist/models/pet_type.dart';
 import 'package:petshop_assist/theme/WaveDecoratedFloatingActionButton.dart';
+
+import '../../models/pet_info.dart';
 
 class CustomerDetailPage extends StatefulWidget {
   const CustomerDetailPage({
@@ -32,13 +32,25 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
           },
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [
-            _CustomerInfoDetail(customer: widget.customer),
-          ],
-        ),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+              bottom: 10,
+              right: 15,
+              left: 15,
+              top: 15,
+            ),
+            child: _CustomerInfoDetail(customer: widget.customer),
+          ),
+          const Divider(
+            color: Color.fromRGBO(0, 0, 0, 0.5),
+            height: 2,
+          ),
+          Expanded(
+            child: _CustomerInfoAdditionalInfo(),
+          ),
+        ],
       ),
       floatingActionButton: const WaveDecoratedFloatingActionButton(
         tooltip: 'Increment',
@@ -50,7 +62,6 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
 
 class _CustomerInfoDetail extends StatelessWidget {
   const _CustomerInfoDetail({
-    super.key,
     required this.customer,
   });
 
@@ -59,100 +70,260 @@ class _CustomerInfoDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      elevation: 3,
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
+    return Column(
+      children: [
+        Row(
           children: [
-            Row(
+            Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFFF5E8C7),
+              ),
+              margin: const EdgeInsets.only(right: 16),
+              clipBehavior: Clip.hardEdge,
+              width: iconSize,
+              height: iconSize,
+              child: SvgPicture.asset(
+                "assets/images/dog_barking_48dp.svg",
+                height: iconSize - 8,
+                fit: BoxFit.none,
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFF5E8C7),
-                  ),
-                  margin: const EdgeInsets.only(right: 16),
-                  clipBehavior: Clip.hardEdge,
-                  width: iconSize,
-                  height: iconSize,
-                  child: SvgPicture.asset(
-                    "assets/images/dog_barking_48dp.svg",
-                    height: iconSize - 8,
-                    fit: BoxFit.none,
+                Text(
+                  customer.name,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Text(
+                  customer.callNumber,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    color: Color.fromARGB(0xFF, 0x50, 0x50, 0x50),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(right: 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      customer.name,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.call),
+                      color: Colors.green,
+                      splashRadius: 24,
                     ),
-                    Text(
-                      customer.callNumber,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Color.fromARGB(0xFF, 0x50, 0x50, 0x50),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.message),
+                      color: Colors.blue,
+                      splashRadius: 24,
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(right: 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.call),
-                          color: Colors.green,
-                          splashRadius: 24,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.message),
-                          color: Colors.blue,
-                          splashRadius: 24,
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              ],
+              ),
+            )
+          ],
+        ),
+        Container(
+          padding: const EdgeInsets.only(top: 5, left: 10),
+          alignment: Alignment.centerLeft,
+          child: const Text(
+            "Memo",
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 5),
+          padding: const EdgeInsets.all(10),
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: Colors.black,
+            ),
+          ),
+          child: Text(
+            customer.memo,
+            style: const TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CustomerInfoAdditionalInfo extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _CustomerInfoAdditionalInfoState();
+}
+
+class _CustomerInfoAdditionalInfoState extends State<_CustomerInfoAdditionalInfo> with TickerProviderStateMixin {
+  late TabController _tabController;
+
+  final double tabBarHeight = 35;
+
+  @override
+  void initState() {
+    _tabController = TabController(
+      length: 3,
+      vsync: this,
+    );
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: _tabController,
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.blueGrey,
+          tabs: [
             Container(
-              padding: const EdgeInsets.only(top: 5, left: 10),
-              alignment: Alignment.centerLeft,
+              height: tabBarHeight,
+              alignment: Alignment.center,
               child: const Text(
-                "Memo",
+                "애완 동물",
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 5),
-              padding: const EdgeInsets.all(10),
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  color: Colors.black,
+              height: tabBarHeight,
+              alignment: Alignment.center,
+              child: const Text(
+                "미용",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              child: Text(customer.memo),
+            ),
+            Container(
+              height: tabBarHeight,
+              alignment: Alignment.center,
+              child: const Text("용품 판매",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ),
+          ],
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: const [
+              _CustomerPetList(),
+              Text("BB"),
+              Text("CC"),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _CustomerPetList extends StatelessWidget {
+  const _CustomerPetList();
+
+  @override
+  Widget build(BuildContext context) {
+    PetInfo info = PetInfo(
+      id: 1,
+      name: "행운",
+      type: PetType.special,
+      detailType: "비숑프리제",
+      age: 8,
+      weight: 4,
+      neutering: 1,
+      memo: "성격 더러움",
+      customerId: 1,
+      createDate: DateTime.now(),
+    );
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _PetListIndex(petInfo: info),
+          const ListDivider(),
+        ],
+      ),
+    );
+  }
+}
+
+class _PetListIndex extends StatelessWidget {
+  const _PetListIndex({required this.petInfo});
+
+  final PetInfo petInfo;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {},
+      child: Ink(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              clipBehavior: Clip.hardEdge,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFFF5E8C7),
+              ),
+              height: 48,
+              width: 48,
+              margin: const EdgeInsets.only(right: 15),
+              child: const Icon(Icons.pets, size: 36),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${petInfo.name} (${petInfo.age})",
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "${petInfo.detailType} (${PetType.format(petInfo.type)})",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color.fromRGBO(0x00, 0x00, 0x00, 0.7),
+                  ),
+                ),
+                Text(
+                  "몸무게 : ${petInfo.weight} kg / 중성화 : ${petInfo.neutering == 1 ? "Y" : "N"}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color.fromRGBO(0x00, 0x00, 0x00, 0.7),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
