@@ -80,7 +80,7 @@ class PetInfo {
   static PetInfo fromMap(Map<String, Object?> map) {
     return PetInfo.create(
       id: int.parse(map['id'].toString()),
-      name: map['departure'].toString(),
+      name: map['name'].toString(),
       type: int.parse(map['type'].toString()),
       detailType: map['detail_type'].toString(),
       age: int.parse(map['age'].toString()),

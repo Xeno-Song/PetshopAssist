@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:petshop_assist/components/divider.dart';
 import 'package:petshop_assist/models/customer_info.dart';
 import 'package:petshop_assist/models/pet_type.dart';
+import 'package:petshop_assist/services/pet_info_service.dart';
 import 'package:petshop_assist/theme/WaveDecoratedFloatingActionButton.dart';
 
 import '../../models/pet_info.dart';
@@ -48,7 +49,9 @@ class _CustomerDetailPageState extends State<CustomerDetailPage> {
             height: 2,
           ),
           Expanded(
-            child: _CustomerInfoAdditionalInfo(),
+            child: _CustomerInfoAdditionalInfo(
+              customerId: widget.customer.id,
+            ),
           ),
         ],
       ),
@@ -169,6 +172,12 @@ class _CustomerInfoDetail extends StatelessWidget {
 }
 
 class _CustomerInfoAdditionalInfo extends StatefulWidget {
+  const _CustomerInfoAdditionalInfo({
+    required this.customerId,
+  });
+
+  final int customerId;
+
   @override
   State<StatefulWidget> createState() => _CustomerInfoAdditionalInfoState();
 }
@@ -233,10 +242,12 @@ class _CustomerInfoAdditionalInfoState extends State<_CustomerInfoAdditionalInfo
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: const [
-              _CustomerPetList(),
-              Text("BB"),
-              Text("CC"),
+            children: [
+              _CustomerPetList(
+                customerId: widget.customerId,
+              ),
+              const Text("BB"),
+              const Text("CC"),
             ],
           ),
         ),
@@ -245,8 +256,31 @@ class _CustomerInfoAdditionalInfoState extends State<_CustomerInfoAdditionalInfo
   }
 }
 
-class _CustomerPetList extends StatelessWidget {
-  const _CustomerPetList();
+class _CustomerPetList extends StatefulWidget {
+  const _CustomerPetList({
+    super.key,
+    required this.customerId,
+  });
+
+  final int customerId;
+
+  @override
+  State<StatefulWidget> createState() => _CustomerPetListState();
+}
+
+class _CustomerPetListState extends State<_CustomerPetList> {
+  List<PetInfo> petList = List.empty();
+
+  @override
+  void initState() {
+    PetInfoService().findByCustomerIdEquals(widget.customerId).then((value) {
+      setState(() {
+        petList = value;
+      });
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -263,12 +297,39 @@ class _CustomerPetList extends StatelessWidget {
       createDate: DateTime.now(),
     );
 
+    List<Widget> items = List.empty(growable: true);
+    for (var index in petList) {
+      items.add(_PetListIndex(petInfo: index));
+      items.add(const ListDivider());
+    }
+    if (items.isEmpty) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.error_outline,
+                  size: 56,
+                ),
+                Text("등록된 동물 정보가 없습니다"),
+              ],
+            ),
+          ),
+          Flexible(
+            flex: 2,
+            child: Container(),
+          ),
+        ],
+      );
+    }
+
     return SingleChildScrollView(
       child: Column(
-        children: [
-          _PetListIndex(petInfo: info),
-          const ListDivider(),
-        ],
+        children: items,
       ),
     );
   }
