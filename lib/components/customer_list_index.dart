@@ -9,25 +9,53 @@ import 'package:petshop_assist/pages/customer/customer_detail.dart';
 import 'package:petshop_assist/services/driving_history_service.dart';
 import 'package:petshop_assist/services/grooming_type_service.dart';
 
+class CustomerListController {
+  CustomerListController(int maxIndex) : _states = List<CustomerListIndexState?>.filled(maxIndex, null);
+
+  final List<CustomerListIndexState?> _states;
+  bool _isOpened = false;
+  int _selectedIndex = -1;
+
+  bool get isOpen => _isOpened;
+  int get selectedIndex => _selectedIndex;
+
+  void registerState(int index, CustomerListIndexState state) => _states[index] = state;
+  void changeIndexDetailState(int index, bool isOpen) {
+    if (_states[index] == null) return;
+
+    print("Index $index : $isOpen");
+    int old = _selectedIndex;
+    _isOpened = isOpen;
+    _selectedIndex = isOpen ? index : -1;
+
+    if (old != -1) _states[old]!.changeDetailState(false);
+    if (isOpen != false) _states[index]!.changeDetailState(isOpen);
+  }
+}
+
 class CustomerListIndex extends StatefulWidget {
   const CustomerListIndex({
     super.key,
+    required this.index,
     required this.customerInfo,
     this.recentDrivingHistory,
+    required this.controller,
     // required this.name,
     // required this.callNumber,
   });
 
+  final int index;
   final CustomerInfo customerInfo;
   final DrivingHistory? recentDrivingHistory;
+  final CustomerListController controller;
   // final String callNumber;
   // final String name;
 
   @override
-  State<StatefulWidget> createState() => _CustomerListIndexState();
+  State<StatefulWidget> createState() => CustomerListIndexState();
 }
 
-class _CustomerListIndexState extends State<CustomerListIndex> {
+class CustomerListIndexState extends State<CustomerListIndex> {
   final double iconWidth = 48;
   final double dividerHeight = 1;
 
@@ -36,26 +64,39 @@ class _CustomerListIndexState extends State<CustomerListIndex> {
   DrivingHistory? recentDrivingHistory;
   bool historySearched = false;
 
-  void onCardTap() {
+  @override
+  void initState() {
+    widget.controller.registerState(widget.index, this);
+    super.initState();
+  }
+
+  void changeDetailState(bool isOpen) {
+    if (isOpen == false) {
+      _changeDetailVisible(false);
+      return;
+    }
+
     if (historySearched == false) {
       historySearched = false;
 
       DrivingHistoryService service = DrivingHistoryService();
       service.findByCustomerIdOrderByDateWithLimit(widget.customerInfo.id).then((value) {
         recentDrivingHistory = value;
-        toggleDetails();
+        _changeDetailVisible(true);
       });
     } else {
-      toggleDetails();
+      _changeDetailVisible(true);
     }
   }
 
-  void toggleDetails() {
+  void _changeDetailVisible(bool isOpen) {
     setState(() {
-      if (_subMenuHeight == 0) {
+      if (isOpen) {
         _subMenuHeight = 110;
+        print("Index #${widget.index} opened.");
       } else {
         _subMenuHeight = 0;
+        print("Index #${widget.index} closed.");
       }
     });
   }
@@ -67,7 +108,8 @@ class _CustomerListIndexState extends State<CustomerListIndex> {
       child: Column(
         children: [
           InkWell(
-            onTap: () => onCardTap(),
+            onTap: () => widget.controller
+                .changeIndexDetailState(widget.index, widget.controller.selectedIndex == widget.index ? false : true),
             child: Ink(
               padding: const EdgeInsets.only(
                 top: 8,

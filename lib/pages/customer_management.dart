@@ -45,6 +45,7 @@ class _CustomerList extends StatefulWidget {
 class _CustomerListState extends State<_CustomerList> {
   final CustomerInfoService _service = CustomerInfoService();
   List<CustomerInfo> customerList = List.empty();
+  late CustomerListController listIndexController;
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _CustomerListState extends State<_CustomerList> {
     _service.findAll().then((value) {
       setState(() {
         customerList = value;
+        listIndexController = CustomerListController(value.length);
       });
     });
   }
@@ -65,6 +67,8 @@ class _CustomerListState extends State<_CustomerList> {
         (index) {
           return CustomerListIndex(
             customerInfo: customerList[index],
+            index: index,
+            controller: listIndexController,
           );
         },
       ),
